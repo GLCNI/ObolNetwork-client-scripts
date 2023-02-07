@@ -1,0 +1,33 @@
+services:  
+  #  ___   _       _   _
+  # |   \ | | ___ | |_| |__   ___  ____  __    __  _  _   _  ____
+  # | |\ \| |/ _ \| __| '_ \ / _ \|  __||   \/   || || \ | ||  _ \
+  # | | \ \ |  __/| |_| | | |  __/| |   | |\  /| || ||  \| || |_| | 
+  # |_|  \__|\___| \__|_| |_|\___||_|   |_| \/ |_||_||_| \_||____/
+  # 
+
+  nethermind:
+    image: nethermind/nethermind:1.16.1
+    ports:
+      - 30303:30303/tcp # P2P TCP
+      - 30303:30303/udp # P2P UDP
+    command: |
+      --config=goerli
+      --datadir=/data
+      --log=INFO
+      --Sync.SnapSync=false
+      --JsonRpc.Enabled=true
+      --JsonRpc.Host=0.0.0.0
+      --JsonRpc.Port=8545
+      --JsonRpc.EnabledModules=[Web3,Eth,Subscribe,Net,]
+      --JsonRpc.JwtSecretFile="/root/jwt/jwt.hex"
+      --JsonRpc.EngineHost=0.0.0.0
+      --JsonRpc.EnginePort=8551
+      --Network.DiscoveryPort=30303
+      --Pruning.CacheMb=2048
+      --Metrics.Enabled=true
+    networks: [dvnode]
+    volumes:
+      - ./data/geth:/data
+      - ./jwt:/root/jwt
+    restart: unless-stopped
