@@ -1,6 +1,8 @@
 # ObolNetwork-client-scripts
 docker-compose script deployments for alternative clients
 
+![Obol Ar LINE - hi res](https://user-images.githubusercontent.com/67609618/218345973-aad394c8-7d1f-4bed-8bc6-a1b7577adf41.jpg)
+
 Repository for docker compose configurations, for alternative clients for Obol Network Charon, with Charon https://github.com/ObolNetwork/charon 
 default execution client is GETH and default consensus client is lighthouse with Teku configured for the validator client. 
 
