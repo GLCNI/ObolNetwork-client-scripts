@@ -13,9 +13,9 @@ default execution client is GETH and default consensus client is lighthouse with
 *Bia is the current Testnet iteration, which is on Goerli Ethereum, I will be adding configurations for the following clients as the testnet progresses, will update with upcoming Testnets after BIA*
 
 **Execution:**
-Nethermind- complete
-Besu- complete
-Erigon
+Nethermind- complete/
+Besu- complete/
+Erigon- complete/
 **Consensus:**
 Teku
 Nimbus
