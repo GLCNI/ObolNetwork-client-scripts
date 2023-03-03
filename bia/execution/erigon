@@ -10,6 +10,7 @@ services:
 #
   erigon:
     image: thorax/erigon:stable
+    user: $USER:$USER
     ports:
       - "30303:30303/tcp" # p2p
       - "30303:30303/udp" # p2p
