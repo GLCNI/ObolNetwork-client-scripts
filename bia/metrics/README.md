@@ -1,6 +1,6 @@
-#Getting Metrics working with other clients
+# Getting Metrics working with other clients
 
-##Nethermind
+## Nethermind
 
 changes to `prometheus.yml` in `./prometheus`
 
