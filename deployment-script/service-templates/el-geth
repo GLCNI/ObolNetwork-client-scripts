@@ -1,0 +1,31 @@
+  #             _   _
+  #   __ _  ___| |_| |__
+  #  / _` |/ _ \ __| '_ \
+  # | (_| |  __/ |_| | | |
+  #  \__, |\___|\__|_| |_|
+  #  |___/
+
+  execution:
+    image: ethereum/client-go:${GETH_VERSION:-v1.10.26}
+    ports:
+      - $EL_P2P_PORT:$EL_P2P_PORT/tcp # P2P TCP
+      - $EL_P2P_PORT:$EL_P2P_PORT/udp # P2P UDP
+    command: |
+      --goerli
+      --http
+      --http.addr=0.0.0.0
+      --http.port=$RPC_PORT
+      --http.vhosts="*"
+      --http.api="db,eth,net,engine,rpc,web3"
+      --authrpc.jwtsecret="/root/jwt/jwt.hex"
+      --authrpc.addr=0.0.0.0
+      --authrpc.port=8551
+      --authrpc.vhosts="*"
+      --metrics
+      --metrics.addr=0.0.0.0
+      --metrics.port=6060
+    networks: [dvnode]
+    volumes:
+      - ./data/geth:/root/.ethereum
+      - ./jwt:/root/jwt
+    restart: unless-stopped
