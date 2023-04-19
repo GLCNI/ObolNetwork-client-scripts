@@ -16,7 +16,7 @@ default execution client is GETH and default consensus client is lighthouse with
 
 ## How to Use (configure manually)
 
-replace under `services` with the client template of choice from `/bia`
+In the `docker-compose.yml` file, replace under `services` with the client template of choice from `/bia`
 
 ```
 version: "3.8"
@@ -55,12 +55,12 @@ run script
 ```
 
 ### what it does
--updates system and checks dependancies 
--installs git and docker if needed
--clones obol charon (LINK) repository 
--download client configuration templates for docker compose
--configure ports and client selection 
--create docker-compose.yml for charon distributed validator node with selected clients
+- updates system and checks dependancies 
+- installs git and docker if needed
+- clones obol charon (LINK) repository 
+- download client configuration templates for docker compose
+- configure ports and client selection 
+- create docker-compose.yml for charon distributed validator node with selected clients
 
 ### features pending 
 - add ENR creation 
