@@ -1,0 +1,37 @@
+  #  _       _
+  # | |_ ___| | ___   _
+  # | __/ _ \ |/ / | | |
+  # | ||  __/   <| |_| |
+  #  \__\___|_|\_\\__,_|
+
+  consensus:
+    image: consensys/teku:latest
+    ports:
+      - $CL_P2P_PORT:$CL_P2P_PORT/tcp   # P2P TCP
+      - $CL_P2P_PORT:$CL_P2P_PORT/udp   # P2P UDP
+    command: |
+      --network=goerli
+      --initial-state=https://goerli.checkpoint-sync.ethdevops.io
+      --ee-endpoint=http://execution:8551
+      --ee-jwt-secret-file=/opt/jwt/jwt.hex
+      --data-base-path=/opt/app/beacon/
+      --data-storage-mode=prune
+      --eth1-deposit-contract-max-request-size=8000
+      --rest-api-enabled=true #enable to allow validators to connect
+      --rest-api-host-allowlist=*			
+      --rest-api-interface=0.0.0.0
+      --rest-api-port=5052
+      --logging=INFO
+      --log-destination=CONSOLE
+      --p2p-enabled=true
+      --p2p-port=$CL_P2P_PORT
+      --p2p-peer-lower-bound=64
+      --p2p-peer-upper-bound=74
+      --metrics-enabled=true
+      --metrics-host-allowlist=*
+      --metrics-port=5054
+    networks: [dvnode]
+      volumes:
+        - ./data/teku-beacon-node:/opt/app/beacon
+        - ./jwt:/opt/jwt
+    restart: unless-stopped
