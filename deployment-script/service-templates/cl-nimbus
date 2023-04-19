@@ -1,0 +1,35 @@
+  #  _   _ ___ __  __ ____  _   _ ____  
+  # | \ | |_ _|  \/  | __ )| | | / ___| 
+  # |  \| || || |\/| |  _ \| | | \___ \ 
+  # | |\  || || |  | | |_) | |_| |___) |
+  # |_| \_|___|_|  |_|____/ \___/|____/
+
+  consensus:
+    image: statusim/nimbus-eth2:amd64-latest
+    ports:
+      - $CL_P2P_PORT:$CL_P2P_PORT/tcp   # P2P TCP
+      - $CL_P2P_PORT:$CL_P2P_PORT/udp   # P2P UDP
+    command: |
+      nimbus_beacon_node
+      --network=goerli
+      --trusted-node-url=http://sync-goerli.beaconcha.in
+      --data-dir=/data/beacon
+      --web3-url=http://execution:8551
+      --log-level=info
+      --non-interactive
+      --rest					
+      --rest-address=0.0.0.0
+      --rest-port=5052
+      --rest-allow-origin=*
+      --doppelganger-detection
+      --max-peers=80
+      --enr-auto-update
+      --jwt-secret=/jwtsecret/jwtsecret.hex
+      --tcp-port=$CL_P2P_PORT
+      --udp-port=$CL_P2P_PORT
+    networks: [dvnode]
+    volumes:
+      - ./data/nimbus-beacon-node:/opt/app/beacon
+      - ./jwt:/opt/jwt
+    restart: unless-stopped
+
