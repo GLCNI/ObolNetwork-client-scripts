@@ -1,0 +1,47 @@
+#  ____                  
+# |  _ \                 
+# | |_) | ___  ___ _   _ 
+# |  _ < / _ \/ __| | | |
+# | |_) |  __/\__ \ |_| |
+# |____/ \___||___/\__,_|
+
+  execution:
+    image: hyperledger/besu:latest
+    ports:
+      - $EL_P2P_PORT:$EL_P2P_PORT/tcp # P2P TCP
+      - $EL_P2P_PORT:$EL_P2P_PORT/udp # P2P UDP
+    command: |
+      --network="goerli"
+      --data-path="/data"
+      --data-storage-format="BONSAI"
+      --nat-method="DOCKER"
+      --logging="INFO"
+      --sync-mode="FAST"
+      --max-peers=25
+      --fast-sync-min-peers=3
+      --host-allowlist=["*",]
+      --rpc-http-enabled=true
+      --rpc-http-host="0.0.0.0"
+      --rpc-http-port=$RPC_PORT
+      --rpc-http-api=["WEB3", "ETH", "NET"]
+      --rpc-http-cors-origins=["*",]
+      --rpc-http-max-active-connections=65536
+      --rpc-max-logs-range=65536
+      --rpc-ws-enabled=true
+      --rpc-ws-api=["WEB3", "ETH", "NET"]
+      --rpc-ws-host="0.0.0.0"
+      --rpc-ws-port="8546"
+      --engine-jwt-secret="/root/jwt/jwt.hex"
+      --engine-rpc-port="8551"
+      --engine-host-allowlist="localhost,0.0.0.0"
+      --p2p-enabled=true
+      --p2p-host="0.0.0.0"
+      --p2p-port=$EL_P2P_PORT
+      --metrics-enabled=true
+      --metrics-host="0.0.0.0"
+      --metrics-port="9545"
+    networks: [dvnode]
+    volumes:
+      - ./data/besu:/data
+      - ./jwt:/root/jwt
+    restart: unless-stopped
